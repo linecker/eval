@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<head>
+<title>eval.html</title>
+
+<script language="JavaScript">
+
+   window.p = function(exp) {
+      output = document.getElementById("output");
+      output.value += exp + "\n";
+      output.scrollTop = output.scrollHeight;
+
+   };
+
+   function evalEditorContent() {
+      code = document.getElementById("editor").value;
+      try {
+         eval(code);
+      } catch (e) {
+         p(e.message);
+      }
+   }
+
+   function clearOutputWindow() {
+      document.getElementById("output").value = "";
+   }
+
+   document.addEventListener("keydown", function (e) {
+      if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+         e.preventDefault();
+         evalEditorContent();
+      } else if (e.keyCode == 68 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+         e.preventDefault();
+         clearOutputWindow();
+      }
+   }, false);
+
+</script>
+
+<style>
+   * {
+      font-size:16pt;
+   }
+   html, body {
+      height:100%;
+      padding: 0px;
+      margin: 0px;
+   }
+   textarea {
+      border: 0px;
+      height: 49%;
+      width: 99.9%;
+      resize: none;
+      overflow: -moz-scrollbars-none;
+   }
+   textarea::-webkit-scrollbar {
+      display: none;
+   }
+</style>
+
+</head>
+<body>
+
+<textarea id="editor" style="border-bottom: 1px solid black;"></textarea>
+<textarea id="output" placeholder="Use p(exp) to print to here, CTRL+S to run, CTRL+D to reset this output window."></textarea>
+
+<!--<br>
+<input type="button" value="Eval (CTRL+S)" onClick="javascript:evalEditorContent()"></input>
+<input type="button" value="Clear Output (CTRL+D)" onClick="javascript:clearOutputWindow()"></input>
+<br>-->
+
+</body>
+</html>
